@@ -1,0 +1,14 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define FPS 30.0
+#define FRAME_DELAY (1000.0 / FPS)
+
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
+
+#define GRID_SIZE 10
+#define GRID_WIDTH (WINDOW_WIDTH / GRID_SIZE)
+#define GRID_HEIGHT (WINDOW_HEIGHT / GRID_SIZE)
+
+#endif
