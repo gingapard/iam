@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+
 #include "utils.h"
 #include "constants.h"
 #include "map.h"
+#include "sand.h"
 
 Uint8 should_close = 0; 
 
@@ -14,9 +16,14 @@ void update(Map* map) {
 
     for (int y = GRID_HEIGHT - 2; y >= 0; --y) {
         for (int x = 0; x < GRID_WIDTH; ++x) {
-            if (temp_grid[y][x].type == Sand && temp_grid[y + 1][x].type == Air) {
-                temp_grid[y + 1][x] = temp_grid[y][x];
-                temp_grid[y][x].type = Air;
+            switch (temp_grid[y][x].type) {
+                case Sand:
+                    update_sand(temp_grid, y, x);
+                    break;
+                case Air:
+                    break;
+                default:
+                    break;
             }
         }
     }

@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define FPS 30.0
+#define FPS 60.0
 #define FRAME_DELAY (1000.0 / FPS)
 
 #define WINDOW_WIDTH 1000
