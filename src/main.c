@@ -5,9 +5,11 @@
 #include "utils.h"
 #include "constants.h"
 #include "map.h"
-#include "sand.h"
+#include "elements/sand.h"
+#include "elements/water.h"
 
 Uint8 should_close = 0; 
+Uint8 element_type = Water;
 
 void update(Map* map) {
     // for temp
@@ -20,6 +22,8 @@ void update(Map* map) {
                 case Sand:
                     update_sand(temp_grid, y, x);
                     break;
+                case Water: 
+                    update_water(temp_grid, y, x);
                 case Air:
                     break;
                 default:
@@ -47,7 +51,7 @@ void handleInput(SDL_Event event, Map* map) {
                     int click_y = event.button.y / GRID_SIZE;
                     
                     if (click_x >= 0 && click_x < GRID_WIDTH && click_y >= 0 && click_y < GRID_HEIGHT) {
-                        map->grid[click_y][click_x].type = Sand;
+                        map->grid[click_y][click_x].type = element_type;
                     }
                 }
                 else if (event.button.button == SDL_BUTTON_RIGHT) {
