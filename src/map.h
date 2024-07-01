@@ -6,11 +6,12 @@
 
 typedef enum {
     Sand,
+    Water,
     Air,
-} CellType;
+} ElementType;
 
 typedef struct {
-    CellType type;
+    ElementType type;
 } Cell;
 
 typedef struct {
