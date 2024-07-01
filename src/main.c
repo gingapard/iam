@@ -9,7 +9,7 @@
 #include "elements/water.h"
 
 Uint8 should_close = 0; 
-Uint8 element_type = Water;
+Uint8 element_type = Sand;
 
 void update(Map* map) {
     // for temp
@@ -61,6 +61,20 @@ void handleInput(SDL_Event event, Map* map) {
                     if (click_x >= 0 && click_x < GRID_WIDTH && click_y >= 0 && click_y < GRID_HEIGHT) {
                         map->grid[click_y][click_x].type = Air;
                     }
+                }
+                break;
+            case SDL_MOUSEWHEEL:
+                if (event.wheel.y > 0) {
+                    if (element_type != 2)
+                        ++element_type;
+                    else
+                        element_type = 0;
+                }
+                else if (event.wheel.y < 0) {
+                    if (element_type != 0)
+                        --element_type;
+                    else
+                        element_type = 2;
                 }
                 break;
             default:
