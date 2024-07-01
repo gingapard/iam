@@ -1,10 +1,30 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "utils.h"
 #include "constants.h"
 #include "map.h"
 
 Uint8 should_close = 0; 
+
+void update(Map* map) {
+    // for temp
+    Cell temp_grid[GRID_HEIGHT][GRID_WIDTH];
+    memcpy(temp_grid, map->grid, sizeof(map->grid));
+
+    for (int y = GRID_HEIGHT - 2; y >= 0; --y) {
+        for (int x = 0; x < GRID_WIDTH; ++x) {
+            if (temp_grid[y][x].type == Sand && temp_grid[y + 1][x].type == Air) {
+                temp_grid[y + 1][x] = temp_grid[y][x];
+                temp_grid[y][x].type = Air;
+            }
+        }
+    }
+
+    // copy back to map->grid
+    memcpy(map->grid, temp_grid, sizeof(map->grid));
+}
+
 
 void handleInput(SDL_Event event, Map* map) {
     while (SDL_PollEvent(&event)) {
@@ -23,6 +43,7 @@ void handleInput(SDL_Event event, Map* map) {
                         map->grid[click_y][click_x].type = Sand;
                     }
                 }
+                break;
             default:
                 break;
         }
@@ -50,7 +71,7 @@ int main(void) {
         clearScreen(rend);
 
         handleInput(event, &map);
-        // TODO: update();
+        update(&map);
         drawMap(rend, &map);
         // drawGrid(rend);
         SDL_RenderPresent(rend);
@@ -67,4 +88,3 @@ int main(void) {
     stop(window, rend);
     return 0;
 }
-
