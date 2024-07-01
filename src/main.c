@@ -50,6 +50,14 @@ void handleInput(SDL_Event event, Map* map) {
                         map->grid[click_y][click_x].type = Sand;
                     }
                 }
+                else if (event.button.button == SDL_BUTTON_RIGHT) {
+                    int click_x = event.button.x / GRID_SIZE;
+                    int click_y = event.button.y / GRID_SIZE;
+                    
+                    if (click_x >= 0 && click_x < GRID_WIDTH && click_y >= 0 && click_y < GRID_HEIGHT) {
+                        map->grid[click_y][click_x].type = Air;
+                    }
+                }
                 break;
             default:
                 break;
