@@ -1,15 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <SDL2/SDL.h>
+#include <SDL2/SDL.h> 
+#include <SDL2/SDL_ttf.h>
 
-#include "utils.h"
+#include "window.h"
+#include "globals.h"
 #include "constants.h"
 #include "map.h"
+#include "hud.h"
 #include "elements/sand.h"
 #include "elements/water.h"
 
+/* Common Global Variables (globals.h) */
 Uint8 should_close = 0; 
 Uint8 element_type = Sand;
+float current_fps = 0.0;
+
+/* SDL Variables */
+SDL_Window* window = NULL;
+SDL_Renderer* rend = NULL;
+TTF_Font* font = NULL;
 
 void update(Map* map) {
     // for temp
@@ -35,7 +44,6 @@ void update(Map* map) {
     // copy back to map->grid
     memcpy(map->grid, temp_grid, sizeof(map->grid));
 }
-
 
 void handleInput(SDL_Event event, Map* map) {
     while (SDL_PollEvent(&event)) {
@@ -84,20 +92,24 @@ void handleInput(SDL_Event event, Map* map) {
 }
 
 int main(void) {
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow("I am",
-                                          SDL_WINDOWPOS_CENTERED,
-                                          SDL_WINDOWPOS_CENTERED,
-                                          WINDOW_WIDTH, WINDOW_HEIGHT, 0);
-
-    SDL_Renderer* rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Event event;
-
-    Map map;
-    initMap(&map);
 
     Uint32 frame_start;
     Uint32 frame_time;
+    SDL_Event event;
+    Map map;
+
+    SDL_Init(SDL_INIT_VIDEO);
+    initWindow();
+    TTF_Init();
+    initMap(&map);
+
+    rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    font = TTF_OpenFont("assets/main.ttf", 12);
+    if (!font) {
+        printf("Failed to load font: %s\n", TTF_GetError());
+        return 1;
+    }
 
     while (!should_close) {
         frame_start = SDL_GetTicks();
@@ -106,6 +118,7 @@ int main(void) {
         handleInput(event, &map);
         update(&map);
         drawMap(rend, &map);
+        renderHud();
         // drawGrid(rend);
         SDL_RenderPresent(rend);
 
@@ -114,10 +127,10 @@ int main(void) {
             SDL_Delay(FRAME_DELAY - frame_time);
         }
 
-        printf("fps: %f\n", 1000.0 / (frame_time + (FRAME_DELAY - frame_time)));
-
+        current_fps = 1000.0 / (frame_time + (FRAME_DELAY - frame_time));
+        printf("fps: %f\n", current_fps);
     }
 
-    stop(window, rend);
+    stop(window, rend, font);
     return 0;
 }
