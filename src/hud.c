@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "constants.h"
 #include "globals.h"
 #include "text.h"
 #include "map.h"

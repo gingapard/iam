@@ -11,6 +11,12 @@ typedef enum {
     Air,
 } ElementType;
 
+typedef enum {
+    Solid,
+    Fluid,
+    Empty,
+} ElementTrait;
+
 extern char* element_cstr[];
 
 typedef struct {
@@ -24,5 +30,6 @@ typedef struct {
 void initMap(Map* map);
 void drawMap(SDL_Renderer* rend, Map* map);
 void drawGrid(SDL_Renderer* rend);
+ElementTrait getElement(ElementType element);
 
 #endif
