@@ -57,3 +57,23 @@ void drawGrid(SDL_Renderer* rend) {
         SDL_RenderDrawLine(rend, 0, y, WINDOW_WIDTH, y);
     }
 }
+
+ElementTrait getElementTrait(ElementType element) {
+    switch (element) {
+        case Sand:
+            return Solid;
+            break;
+        case Water: 
+            return Solid;
+            break;
+        case Rock:
+            return Solid;
+            break;
+        case Air:
+            return Empty;
+            break;
+        default:
+            return Empty;
+            break;
+    }
+}
