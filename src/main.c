@@ -7,8 +7,10 @@
 #include "constants.h"
 #include "map.h"
 #include "hud.h"
+
 #include "elements/sand.h"
 #include "elements/water.h"
+#include "elements/rock.h"
 
 /* Common Global Variables (globals.h) */
 Uint8 should_close = 0; 
@@ -31,10 +33,14 @@ void update(Map* map) {
         for (int x = 0; x < GRID_WIDTH; ++x) {
             switch (temp_grid[y][x].type) {
                 case Sand:
-                    update_sand(temp_grid, y, x);
+                    updateSand(temp_grid, y, x);
                     break;
                 case Water: 
-                    update_water(temp_grid, y, x);
+                    updateWater(temp_grid, y, x);
+                    break;
+                case Rock:
+                    updateRock(temp_grid, y, x);
+                    break;
                 case Air:
                     break;
                 default:
@@ -82,7 +88,7 @@ void handleInput(SDL_Event event, Map* map) {
                 break;
             case SDL_MOUSEWHEEL:
                 if (event.wheel.y > 0) {
-                    if (element_type != 2)
+                    if (element_type != (ELEMENT_N - 2))
                         ++element_type;
                     else
                         element_type = 0;
@@ -91,7 +97,7 @@ void handleInput(SDL_Event event, Map* map) {
                     if (element_type != 0)
                         --element_type;
                     else
-                        element_type = 2;
+                        element_type = ELEMENT_N - 2;
                 }
                 break;
             default:
@@ -101,7 +107,7 @@ void handleInput(SDL_Event event, Map* map) {
 
     int mouse_x;
     int mouse_y;
-    Uint32 mouseState = SDL_GetMouseState(&mouse_x, &mouse_y);
+    (void)SDL_GetMouseState(&mouse_x, &mouse_y);
     int grid_x = mouse_x / GRID_SIZE;
     int grid_y = mouse_y / GRID_SIZE;
 

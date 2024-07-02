@@ -11,4 +11,6 @@
 #define GRID_WIDTH (WINDOW_WIDTH / GRID_SIZE)
 #define GRID_HEIGHT (WINDOW_HEIGHT / GRID_SIZE)
 
+#define ELEMENT_N 4
+
 #endif
