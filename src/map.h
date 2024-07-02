@@ -7,8 +7,11 @@
 typedef enum {
     Sand,
     Water,
+    Rock,
     Air,
 } ElementType;
+
+extern char* element_cstr[];
 
 typedef struct {
     ElementType type;

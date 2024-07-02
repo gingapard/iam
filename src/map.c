@@ -1,6 +1,14 @@
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "constants.h"
 #include "map.h"
+
+char* element_cstr[] = {
+    "Sand",
+    "Water",
+    "Rock",
+    "Air",
+};
 
 void initMap(Map* map) {
     for (int y = 0; y < GRID_HEIGHT; ++y) { 
@@ -20,9 +28,14 @@ void drawMap(SDL_Renderer* rend, Map* map) {
                     SDL_RenderFillRect(rend, &sand_rect);
                     break;
                 case Water:
-                    SDL_SetRenderDrawColor(rend, 64, 164, 223, 255);
+                    SDL_SetRenderDrawColor(rend, 64, 164, 223, 128);
                     SDL_Rect water_rect = { x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE };
                     SDL_RenderFillRect(rend, &water_rect);
+                    break;
+                case Rock:
+                    SDL_SetRenderDrawColor(rend, 120, 120, 120, 255);
+                    SDL_Rect rock_rect = { x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE };
+                    SDL_RenderFillRect(rend, &rock_rect);
                     break;
                 case Air:
                     break;
