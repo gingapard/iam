@@ -14,6 +14,8 @@
 Uint8 should_close = 0; 
 Uint8 element_type = Sand;
 float current_fps = 0.0;
+Uint8 mouse_left_held = 0;
+Uint8 mouse_right_held = 0;
 
 /* SDL Variables */
 SDL_Window* window = NULL;
@@ -55,14 +57,16 @@ void handleInput(SDL_Event event, Map* map) {
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.button == SDL_BUTTON_LEFT) {
+                    mouse_left_held = 1;
                     int click_x = event.button.x / GRID_SIZE;
-                    int click_y = event.button.y / GRID_SIZE;
+                   int click_y = event.button.y / GRID_SIZE;
                     
                     if (click_x >= 0 && click_x < GRID_WIDTH && click_y >= 0 && click_y < GRID_HEIGHT) {
                         map->grid[click_y][click_x].type = element_type;
                     }
                 }
                 else if (event.button.button == SDL_BUTTON_RIGHT) {
+                    mouse_right_held = 1;
                     int click_x = event.button.x / GRID_SIZE;
                     int click_y = event.button.y / GRID_SIZE;
                     
@@ -70,6 +74,11 @@ void handleInput(SDL_Event event, Map* map) {
                         map->grid[click_y][click_x].type = Air;
                     }
                 }
+                break;
+            case SDL_MOUSEBUTTONUP:
+                if (event.button.button == SDL_BUTTON_LEFT)
+                    mouse_left_held = 0;
+                else mouse_right_held = 0;
                 break;
             case SDL_MOUSEWHEEL:
                 if (event.wheel.y > 0) {
@@ -88,6 +97,23 @@ void handleInput(SDL_Event event, Map* map) {
             default:
                 break;
         }
+    }
+
+    int mouse_x;
+    int mouse_y;
+    Uint32 mouseState = SDL_GetMouseState(&mouse_x, &mouse_y);
+    int grid_x = mouse_x / GRID_SIZE;
+    int grid_y = mouse_y / GRID_SIZE;
+
+    if (mouse_left_held) {
+        if (grid_x >= 0 && grid_x < GRID_WIDTH && grid_y >= 0 && grid_y < GRID_HEIGHT) {
+            map->grid[grid_y][grid_x].type = element_type;
+        }
+    }
+    if (mouse_right_held) {
+        if (grid_x >= 0 && grid_x < GRID_WIDTH && grid_y >= 0 && grid_y < GRID_HEIGHT) {
+            map->grid[grid_y][grid_x].type = Air;
+        } 
     }
 }
 
