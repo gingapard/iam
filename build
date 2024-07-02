@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SRC="src/main.c src/map.c src/window.c src/hud.c src/text.c src/elements/sand.c src/elements/water.c"
+LIBS="-Iinclude -Llib -lSDL2 -lSDL2main -lSDL2_ttf"
+FLAGS="-W -Wall"
+DST="main.x86_64"
+
+cc $FLAGS -o $DST $SRC $LIBS

@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include "../constants.h"
 #include "../map.h"
 
