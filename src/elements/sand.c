@@ -3,10 +3,10 @@
 #include "../map.h"
 
 void updateSand(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
+
     // Checking if sand can move one down
     if (y + 1 < GRID_HEIGHT && hasTrait(grid[y + 1][x].type, Empty)) {
-        grid[y + 1][x] = grid[y][x];
-        grid[y][x].type = Air;
+        downSwap(grid, y, x);
     } else {
 
         // If both left and right is free, it will pick a random direction
@@ -18,12 +18,10 @@ void updateSand(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
             && hasTrait(grid[y + 1][x + 1].type, Empty)
         ) {
             if (rand() % 2) {
-                grid[y + 1][x - 1] = grid[y][x];
-                grid[y][x].type = Air;
+                downRightSwap(grid, y, x);
             }
             else {
-                grid[y + 1][x + 1] = grid[y][x];
-                grid[y][x].type = Air;
+                downLeftSwap(grid, y, x);
             }
         }
 

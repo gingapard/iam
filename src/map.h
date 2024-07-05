@@ -32,4 +32,9 @@ void drawMap(SDL_Renderer* rend, Map* map);
 void drawGrid(SDL_Renderer* rend);
 Uint8 hasTrait(ElementType element, ElementTrait trait);
 
+/* Moving */
+void downSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x);
+void downRightSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x);
+void downLeftSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x);
+
 #endif
