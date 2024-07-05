@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "constants.h"
 #include "map.h"
@@ -58,22 +57,28 @@ void drawGrid(SDL_Renderer* rend) {
     }
 }
 
-ElementTrait getElementTrait(ElementType element) {
-    switch (element) {
-        case Sand:
-            return Solid;
+/* Checks if ElementType has a certain trait */
+Uint8 hasTrait(ElementType type, ElementTrait trait) {
+    switch (type) {
+        case Sand: 
+            if (trait == Solid)
+                return 1;
             break;
-        case Water: 
-            return Solid;
+        case Water:
+            if (trait == Fluid)
+                return 1;
             break;
         case Rock:
-            return Solid;
+            if (trait == Solid)
+                return 1;
             break;
         case Air:
-            return Empty;
+            if (trait == Empty)
+                return 1;
             break;
         default:
-            return Empty;
             break;
     }
+
+    return 0;
 }
