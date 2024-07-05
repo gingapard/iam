@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include "constants.h"
 
+extern char* element_cstr[];
+
 typedef enum {
     Sand,
     Water,
@@ -17,8 +19,6 @@ typedef enum {
     Empty,
 } ElementTrait;
 
-extern char* element_cstr[];
-
 typedef struct {
     ElementType type;
 } Cell;
@@ -30,6 +30,6 @@ typedef struct {
 void initMap(Map* map);
 void drawMap(SDL_Renderer* rend, Map* map);
 void drawGrid(SDL_Renderer* rend);
-ElementTrait getElement(ElementType element);
+Uint8 hasTrait(ElementType element, ElementTrait trait);
 
 #endif
