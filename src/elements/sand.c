@@ -2,10 +2,10 @@
 #include "../constants.h"
 #include "../map.h"
 
-void moveRandom(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
+static void moveRandom(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
     if (rand() % 2)
         downRightSwap(grid, y, x);
-    else 
+    else
         downLeftSwap(grid, y, x);
 }
 
