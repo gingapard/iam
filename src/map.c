@@ -83,21 +83,28 @@ Uint8 hasTrait(ElementType type, ElementTrait trait) {
     return 0;
 }
 
+void swapCell(ElementType* y, ElementType* x) {
+    *x = *x ^ *y;
+    *y = *x ^ *y;
+    *x = *x ^ *y;
+}
+
 void downSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
-    grid[y + 1][x].type = grid[y + 1][x].type ^ grid[y][x].type;
-    grid[y][x].type = grid[y + 1][x].type ^ grid[y][x].type;
-    grid[y + 1][x].type = grid[y + 1][x].type ^ grid[y][x].type;
+    swapCell(&grid[y + 1][x].type, &grid[y][x].type);
 }
 
 void downRightSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
-    grid[y + 1][x + 1].type = grid[y + 1][x + 1].type ^ grid[y][x].type;
-    grid[y][x].type = grid[y + 1][x + 1].type ^ grid[y][x].type;
-    grid[y + 1][x + 1].type = grid[y + 1][x + 1].type ^ grid[y][x].type;
+    swapCell(&grid[y + 1][x + 1].type, &grid[y][x].type);
 }
 
 void downLeftSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
-    grid[y + 1][x - 1].type = grid[y + 1][x - 1].type ^ grid[y][x].type;
-    grid[y][x].type = grid[y + 1][x - 1].type ^ grid[y][x].type;
-    grid[y + 1][x - 1].type = grid[y + 1][x - 1].type ^ grid[y][x].type;
+    swapCell(&grid[y + 1][x - 1].type, &grid[y][x].type);
 }
 
+void rightSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
+    swapCell(&grid[y][x + 1].type, &grid[y][x].type);
+}
+
+void leftSwap(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
+    swapCell(&grid[y][x - 1].type, &grid[y][x].type);
+}
