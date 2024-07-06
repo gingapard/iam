@@ -10,6 +10,10 @@ void moveRandom(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
 }
 
 void updateSand(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
+    if (!(y < GRID_HEIGHT && x < GRID_WIDTH)) {
+        return;
+    }
+
     ElementType* xd = &grid[y + 1][x].type;
     ElementType* xr = &grid[y][x + 1].type;
     ElementType* xl = &grid[y][x - 1].type;
