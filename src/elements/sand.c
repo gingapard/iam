@@ -10,21 +10,26 @@ void moveRandom(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
 }
 
 void updateSand(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
+    ElementType* xd = &grid[y + 1][x].type;
+    ElementType* xr = &grid[y][x + 1].type;
+    ElementType* xl = &grid[y][x - 1].type;
+    ElementType* xdr = &grid[y + 1][x + 1].type;
+    ElementType* xdl = &grid[y + 1][x - 1].type;
+
     // moving directly down
-    if (y + 1 < GRID_HEIGHT && hasTrait(grid[y + 1][x].type, Empty)) {
+    if (y + 1 < GRID_HEIGHT && hasTrait(*xd, Empty) || hasTrait(*xd, Fluid)) {
         downSwap(grid, y, x);
         return;
     }
     
-    Uint8 canLeft = (x > 0 && hasTrait(grid[y][x - 1].type, Empty) && hasTrait(grid[y + 1][x - 1].type, Empty));
-    Uint8 canRight = (x < GRID_WIDTH - 1 && hasTrait(grid[y][x + 1].type, Empty) && hasTrait(grid[y + 1][x + 1].type, Empty));
+    Uint8 canLeft = (x > 0 && (hasTrait(*xl, Empty) && hasTrait(*xdl, Empty)) || hasTrait(*xl, Fluid) && hasTrait(*xdl, Fluid));
+    Uint8 canRight = (x < GRID_WIDTH - 1 && (hasTrait(*xr, Empty) && hasTrait(*xdr, Empty)) || hasTrait(*xl, Fluid) && hasTrait(*xdl, Fluid));
 
-    if (canLeft && canRight) {
+    if (canLeft && canRight)
         moveRandom(grid, y, x);
-    } else if (canRight) {
+    else if (canRight) 
         downRightSwap(grid, y, x);
-    } else if (canLeft) {
+    else if (canLeft)
         downLeftSwap(grid, y, x);
-    }
 }
 
