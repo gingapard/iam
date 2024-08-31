@@ -14,4 +14,7 @@ extern TTF_Font* font;
 extern SDL_Renderer* rend;
 extern SDL_Window* window;
 
+extern int right_weight;
+extern int left_weight;
+
 #endif
