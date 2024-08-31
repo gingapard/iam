@@ -24,6 +24,9 @@ SDL_Window* window = NULL;
 SDL_Renderer* rend = NULL;
 TTF_Font* font = NULL;
 
+int right_weight;
+int left_weight;
+
 void update(Map* map) {
     // for temp
     Cell temp_grid[GRID_HEIGHT][GRID_WIDTH];

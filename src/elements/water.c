@@ -1,11 +1,20 @@
 #include "../constants.h"
+#include "../globals.h"
 #include "../map.h"
 
 static void moveRandom(Cell grid[GRID_HEIGHT][GRID_WIDTH], int y, int x) {
-    if (rand() % 2)
+    int weight = rand() % 2;
+
+    if (weight) {
         rightSwap(grid, y, x);
-    else
+        right_weight++;
+    }
+    else {
         leftSwap(grid, y, x);
+        left_weight++;
+    }
+
+    printf("left: %d\nright: %d", left_weight, right_weight);
 }
 
 /* for some reason, the water biases towards left side */
